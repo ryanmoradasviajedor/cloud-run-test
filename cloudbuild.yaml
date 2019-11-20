@@ -1,0 +1,12 @@
+steps:
+  # build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/cloud-run-test-259614/hello-00001-xug', '.']
+    # push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/cloud-run-test-259614/hello-00001-xug']
+    # Deploy container image to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run', 'deploy', 'hello-00001-xug', '--image', 'gcr.io/cloud-run-test-259614/hello-00001-xug', '--region', '[REGION]','--platform', '[PLATFORM]', '--quiet']
+images:
+  - gcr.io/cloud-run-test-259614/hello-00001-xug
